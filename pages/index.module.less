@@ -1,0 +1,60 @@
+.container {
+  position: relative;
+  .gallery_section {
+    margin-top: 70px;
+    .events_heading {
+      color: #212529;
+      text-align: center;
+      padding: 20px 0px;
+      font-size: 30px;
+      font-weight: 700;
+    }
+    .gallery_heading {
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+  .events_gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    padding-bottom: 56px;
+    padding-top: 25px;
+  }
+  .viewall_button {
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+
+    span {
+      cursor: pointer;
+
+      &:hover {
+        color: blue;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .events_parent {
+    margin: 70px 0;
+    .events_created {
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      color: #212529;
+      font-weight: 600;
+    }
+    .tabs_container {
+      margin-top: 30px;
+    }
+    .events_container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      padding: 30px 6px;
+      overflow-x: hidden;
+    }
+  }
+}
