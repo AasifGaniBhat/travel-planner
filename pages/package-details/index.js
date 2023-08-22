@@ -4,26 +4,27 @@ import MainWrapper from "../../components/ui/wrapper/wrapper";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import classes from './package-details.module.less'
+import classes from "./package-details.module.less";
 import MyButton from "../../components/ui/my-button";
 import { kuposModalErrorSuccessState } from "../../recoil/atoms/common";
 import { useSetRecoilState } from "recoil";
 
 const PackageDetails = () => {
+  const router = useRouter();
+  const { t } = useTranslation("common");
 
-    const router = useRouter();
-    const { t } = useTranslation("common");
+  //recoil states
+  const setModalErrorSuccessState = useSetRecoilState(
+    kuposModalErrorSuccessState
+  );
 
-    //recoil states
-    const setModalErrorSuccessState = useSetRecoilState(
-        kuposModalErrorSuccessState
-      );
-
-
-      const buyNow = () => {
-
-        setModalErrorSuccessState({showModal: true, success: true, modalTitle:"Successfully Booked!"})
-      }
+  const buyNow = () => {
+    setModalErrorSuccessState({
+      showModal: true,
+      success: true,
+      modalTitle: "Successfully Booked!",
+    });
+  };
   return (
     <>
       <MainWrapper t={t}>
@@ -42,46 +43,54 @@ const PackageDetails = () => {
         </div>
 
         <ContentContainer>
-            <div className={classes.package}>
-               <div className={classes.img_container}>
-               <img src="/images/iustimages/image1.jpg" alt="package" />
-               </div>
-
-               <div className={classes.package_details}>
-                <div className={classes.name}>I am package name for 2days 3 nights</div>
-                <div className={classes.desc}>
-                    lorem ipsum dolar issset  lorem ipsum dolar issset  lorem ipsum dolar issset lorem ipsum dolar issset  lorem ipsum dolar issset
-                </div>
-
-                <div className={classes.details_item}><span className={classes.label}>Stay Period:</span> 2 Days 3 Nights </div>
-                <div className={classes.details_item}><span className={classes.label}>Place of Visit:</span>Gulmarg</div>
-                <div className={classes.details_item}><span className={classes.label}>Number of Persons:</span>3 Persons</div>
-                <div className={classes.details_item}><span className={classes.label}>Vehicle Type:</span>Tavera</div>
-                <div className={classes.details_item}><span className={classes.label}>Guide:</span>Tandav Kumar</div>
-
-                <div className={classes.price}><span className={classes.label}>Package Price:</span>30,000</div>
-
-                <div className={classes.btn_container}>
-                <MyButton label="Buy Now" onClick={buyNow} />
-                </div>
-
-
-
-               </div>
+          <div className={classes.package}>
+            <div className={classes.img_container}>
+              <img src="/images/iustimages/image1.jpg" alt="package" />
             </div>
+
+            <div className={classes.package_details}>
+              <div className={classes.name}>
+                I am package name for 2days 3 nights
+              </div>
+              <div className={classes.desc}>KASHMIR :HEAVEN ON EARTH</div>
+
+              <div className={classes.details_item}>
+                <span className={classes.label}>Stay Period:</span> 2 Days 3
+                Nights{" "}
+              </div>
+              <div className={classes.details_item}>
+                <span className={classes.label}>Place of Visit:</span>Gulmarg
+              </div>
+              <div className={classes.details_item}>
+                <span className={classes.label}>Number of Persons:</span>3
+                Persons
+              </div>
+              <div className={classes.details_item}>
+                <span className={classes.label}>Vehicle Type:</span>Tavera
+              </div>
+              <div className={classes.details_item}>
+                <span className={classes.label}>Guide:</span>Guide A
+              </div>
+
+              <div className={classes.price}>
+                <span className={classes.label}>Package Price:</span>30,000
+              </div>
+
+              <div className={classes.btn_container}>
+                <MyButton label="Buy Now" onClick={buyNow} />
+              </div>
+            </div>
+          </div>
         </ContentContainer>
-
-
       </MainWrapper>
     </>
   );
 };
 
-
 export const getStaticProps = async ({ locale }) => ({
-    props: {
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
-    },
-  });
+  props: {
+    ...(await serverSideTranslations(locale ?? "es", ["common"])),
+  },
+});
 
 export default PackageDetails;

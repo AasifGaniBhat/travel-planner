@@ -7,26 +7,16 @@ import classes from "./footer.module.less";
 const Footer = () => {
   const images = [
     "facebook.png",
-    "pintrest.png",
     "twitter.png",
     "youtube.png",
-    "wechat.png",
     "whatsapp.png",
-    "reddit.png",
     "linkedin.png",
     "instagram.png",
   ];
   const footerLinks = [
     {
       title: "About Us",
-      content: [
-        "Meet us",
-        "SKYBIZ Group",
-        "Careers",
-        "SKYBIZ Education project",
-        "Tech Master Event platform",
-        "Contact",
-      ],
+      content: ["Meet us", "Group", "Careers", "Education project", "Contact"],
     },
     {
       title: "Shortcuts",
@@ -35,9 +25,7 @@ const Footer = () => {
         "Orders",
         "Prices",
         "Payments",
-        "Sales documents",
         "Complaint form",
-        "Right of withdrawal from the agreement",
         "Help",
       ],
     },
@@ -45,13 +33,14 @@ const Footer = () => {
       title: "Information",
       content: [
         "Terms of cooperation",
-        "Data Protection Policy",
-        "GDPR information",
         "Cookies policy",
-        "Manage cookies",
+        "save nature",
         "Environmental information",
-        "The ODR platform",
       ],
+    },
+    {
+      title: "Designer",
+      content: ["Mohammad Aasif", "</>"],
     },
   ];
   const routeToLink = (item) => {
@@ -63,7 +52,7 @@ const Footer = () => {
         <div className={classes.logo_social}>
           <div className={classes.logo}>
             <Image
-              src={"/images/icons/skybiz.jpg"}
+              src={"/images/iustimages/tplan.png"}
               width={200}
               height={100}
               alt=""
@@ -110,5 +99,4 @@ const Footer = () => {
     </>
   );
 };
-
 export default Footer;

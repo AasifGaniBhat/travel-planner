@@ -1,8 +1,7 @@
 
 
 import React from "react";
-import  classes  from './destination.module.less'
-const Destinations=()=>{
+import  classes  from './destination.module.less;{
     return(
         <div className={classes.destination_container}>
             <div className={classes.destination_heading}>DESTINATIONS</div>
@@ -14,7 +13,7 @@ const Destinations=()=>{
     </div>
     </div>
     )
-}
+    }
 export default Destinations;
 
 

@@ -29,9 +29,9 @@ const Header = () => {
     router.push("/search-page");
   };
 
-  const gotoCartPage = () => {
-    router.push("/cart-page");
-  };
+  // const gotoCartPage = () => {
+  //   router.push("/cart-page");
+  // };
   const returnHome = () => {
     router.push("/");
   };
@@ -41,8 +41,25 @@ const Header = () => {
   const loginPage = () => {
     router.push("/login");
   };
-  const gotoWishList = () => {
-    router.push("/wish-list");
+  const home = () => {
+    router.push("/");
+  };
+  const gotoPhotopackage = () => {
+    router.push("/package-details");
+  };
+  const gotoExperiences = () => {
+    router.push("/experiences");
+  };
+  const gotoCabs = () => {
+    router.push("/cabs");
+  };
+  const hotels = () => {
+    router.push("/hotels");
+    console.log(hotels);
+  };
+  const Travelguide = () => {
+    router.push("/Travelguide");
+    console.log(Travelguide);
   };
 
   return (
@@ -77,9 +94,22 @@ const Header = () => {
 
           <div className={classes.cart_login}>
             <div
-              style={{ display: "flex" }}
+              className={classes.login_home}
+              onClick={home}
+              style={{ cursor: "pointer" }}
+            >
+              {/* <img
+                src="/images/iustimages/log1.png"
+                width={10}
+                height={15}
+                alt=""
+              /> */}
+              Home
+            </div>
+            <div
+              // style={{ display: "flex" }}
               className={classes.cart}
-              onClick={gotoWishList}
+              onClick={gotoPhotopackage}
             >
               {/* <Image
                 src={"/images/icons/home/heart-filled.png"}
@@ -87,12 +117,18 @@ const Header = () => {
                 height={34}
                 alt=""
               /> */}
-              destinations
+              {/* <img
+                src="/images/iustimages/dest1.png"
+                width={15}
+                height={15}
+                alt=""
+              /> */}
+              Destinations
             </div>
             <div
-              style={{ display: "flex" }}
+              // style={{ display: "flex" }}
               className={classes.cart}
-              onClick={gotoCartPage}
+              onClick={gotoExperiences}
             >
               {/* <Image
                 src={"/images/general/icons8-fast-cart-60.png"}
@@ -100,17 +136,56 @@ const Header = () => {
                 height={34}
                 alt=""
               /> */}
-              experience
-            </div>
-
-            <div className={classes.login_register} onClick={loginPage}>
-              {/* <Image
-                src={"/images/icons/login-reg.png"}
-                width={34}
-                height={34}
+              {/* <img
+                src="/images/iustimages/exp1.png"
+                width={15}
+                height={15}
                 alt=""
               /> */}
-              Login
+              Experience
+            </div>
+
+            <div
+              className={classes.Cabs}
+              onClick={gotoCabs}
+              style={{ cursor: "pointer" }}
+            >
+              {/* <img
+                src="/images/iustimages/cab1.png"
+                width={15}
+                height={15}
+                alt=""
+              /> */}
+              Cabs
+            </div>
+            <div
+              className={classes.hotels}
+              onClick={hotels}
+              style={{ cursor: "pointer" }}
+            >
+              {/* <img
+                src="/images/iustimages/hot1.png"
+                width={15}
+                height={10}
+                alt=""
+              /> */}
+              Hotels
+            </div>
+            <div
+              className={classes.Travelguide}
+              onClick={Travelguide}
+              style={{ cursor: "pointer" }}
+            >
+              {/* <img
+                src="/images/iustimages/cab1.png"
+                width={15}
+                height={15}
+                alt=""
+              /> */}
+              Travel Guide
+            </div>
+            <div className={classes.login_register} onClick={loginPage}>
+              Create Account
             </div>
           </div>
         </div>

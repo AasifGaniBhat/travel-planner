@@ -1,44 +1,85 @@
-.event_single_item{
+.event_single_item {
+  padding: 20px;
+  box-shadow: 0px 0px 8px 4px #ccc;
+  border-radius: 8px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 2px rgb(128, 187, 196);
+    &:hover img {
+      transform: scale3d(1.1, 1.1, 1.1);
+      transition: opacity 1s ease 0s, transform 2s ease 0s;
+      border-radius: 10px;
+    }
+  }
 
-    padding: 20px;
-    box-shadow: 0px 0px 8px 4px #ccc;
-    border-radius: 8px;
+  .title {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 12px;
+  }
 
+  .desc {
+    font-size: 14px;
 
-    .title{
-        font-size: 20px;
-        font-weight:bold;
-        color: #111;
-        margin-bottom: 12px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .date_action_container {
+    display: flex;
+    justify-content: space-between;
+
+    .date {
+      font-size: 14px;
+      font-weight: bold;
     }
 
-    .desc{
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 12px;
-
+    .action_button {
+      width: 20px;
+      height: auto;
     }
+  }
+  .dest_desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: baseline;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .event_icon {
+    width: fit-content;
+    height: 20px;
+  }
+}
 
+.duration {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  // font-size: 12px;
+  // font-weight: bold;
+}
 
-    .date_action_container{
-        display: flex;
-        justify-content: space-between;
-
-        .date{
-            font-size: 14px;
-            font-weight:bold;
-        }
-
-        .action_button{
-            width: 20px;
-            height: auto;
-        }
-
-    }
-
-    
-
-
-
-    
+.cab {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  // font-size: 12px;
+  // font-weight: bold;
+}
+.place {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  // font-size: 12px;
+  // font-weight: bold;
 }

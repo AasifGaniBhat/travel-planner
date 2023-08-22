@@ -1,9 +1,8 @@
 {
-    "liveServer.settings.port": 5501,
-    "cSpell.words": [
-        "Kupos",
-        "swipeable"
-    ],
-    "docwriter.progress.trackFunctions": true,
-    "docwriter.progress.trackMethods": false
+  "liveServer.settings.port": 5501,
+  "cSpell.words": ["Kupos", "swipeable"],
+  "docwriter.progress.trackFunctions": true,
+  "docwriter.progress.trackMethods": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }
