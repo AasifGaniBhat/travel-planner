@@ -19,7 +19,7 @@ const Footer = () => {
       content: ["Meet us", "Group", "Careers", "Education project", "Contact"],
     },
     {
-      title: "Shortcuts",
+      title: "Our Plans",
       content: [
         "Means and cost of transport",
         "Orders",
@@ -37,10 +37,6 @@ const Footer = () => {
         "save nature",
         "Environmental information",
       ],
-    },
-    {
-      title: "Designer",
-      content: ["Mohammad Aasif", "</>"],
     },
   ];
   const routeToLink = (item) => {

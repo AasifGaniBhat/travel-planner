@@ -1,6 +1,7 @@
 import classes from "./event-item.module.less";
 
 const EventItem = ({ event, index }) => {
+
   return (
     <div className={classes.event_single_item} key={index}>
       <img src="/images/iustimages/image8.jpg" alt="" />

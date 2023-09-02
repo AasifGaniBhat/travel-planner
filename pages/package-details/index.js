@@ -49,9 +49,7 @@ const PackageDetails = () => {
             </div>
 
             <div className={classes.package_details}>
-              <div className={classes.name}>
-                I am package name for 2days 3 nights
-              </div>
+              <div className={classes.name}>Package for 2days 3nights</div>
               <div className={classes.desc}>KASHMIR :HEAVEN ON EARTH</div>
 
               <div className={classes.details_item}>
@@ -69,9 +67,12 @@ const PackageDetails = () => {
                 <span className={classes.label}>Vehicle Type:</span>Tavera
               </div>
               <div className={classes.details_item}>
-                <span className={classes.label}>Guide:</span>Guide A
+                <span className={classes.label}>Guide:</span>Sane Trav
               </div>
 
+              <div className={classes.details_item}>
+                <span className={classes.hotel}>Hotel:</span>Great places
+              </div>
               <div className={classes.price}>
                 <span className={classes.label}>Package Price:</span>30,000
               </div>

@@ -61,8 +61,7 @@ const Profile = () => {
             {selectedTab === 0 ? (
               <img
                 src={"/images/iustimages/cabb.png"}
-                width={50}
-                border_radius={20}
+                style={{ width: "50", border_radius: "20" }}
               />
             ) : (
               "outside packages"

@@ -25,3 +25,4 @@ const EventsGallery = (props) => {
   });
 };
 export default EventsGallery;
+

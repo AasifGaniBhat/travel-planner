@@ -55,13 +55,13 @@ const Header = () => {
   };
   const hotels = () => {
     router.push("/hotels");
-    console.log(hotels);
   };
   const Travelguide = () => {
     router.push("/Travelguide");
-    console.log(Travelguide);
   };
-
+  const profile = () => {
+    router.push("/profile");
+  };
   return (
     <div className={classes.main_wrapper}>
       <ContentContainer>
@@ -170,6 +170,19 @@ const Header = () => {
                 alt=""
               /> */}
               Hotels
+            </div>
+            <div
+              className={classes.Profile}
+              onClick={profile}
+              style={{ cursor: "pointer" }}
+            >
+              {/* <img
+                src="/images/iustimages/cab1.png"
+                width={15}
+                height={15}
+                alt=""
+              /> */}
+              Profile
             </div>
             <div
               className={classes.Travelguide}

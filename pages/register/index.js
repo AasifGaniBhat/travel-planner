@@ -49,7 +49,7 @@ const Register = () => {
     { label: "Other", value: "other" },
   ];
   const inputChange = (val, type) => {
-    let error = `${type}Error`; 
+    let error = `${type}Error`;
     setInput({ ...input, [type]: val, [error]: null });
   };
   const registerUser = () => {
@@ -58,69 +58,67 @@ const Register = () => {
     // }
 
     let errors = 0;
-    
+
     let localInputState = CommonService.copyObject(input);
 
-    if(input.first_name === ""){
-       toast("Please enter your valid first name!");
+    if (input.first_name === "") {
+      toast("Please enter your valid first name!");
 
       localInputState["first_nameError"] = "Please enter your first name!";
       errors++;
     }
 
-    if(input.surname === ""){
+    if (input.surname === "") {
       localInputState["surnameError"] = "Please enter your last name!";
       errors++;
     }
-    if(input.mobile === ""){
+    if (input.mobile === "") {
       localInputState["mobileError"] = "Please enter your mobile number!";
       errors++;
-    }else{
-      if(input.mobile?.length !== 10){
-        localInputState["mobileError"] = "Please enter your valid mobile number!";
-      errors++;
+    } else {
+      if (input.mobile?.length !== 10) {
+        localInputState["mobileError"] =
+          "Please enter your valid mobile number!";
+        errors++;
       }
     }
 
-    if(input.email === ""){
+    if (input.email === "") {
       localInputState["emailError"] = "Please enter your email address!";
       errors++;
-
-    }else{
-      if(!CommonService.isEMailValid(input.email)){
-        localInputState["emailError"] = "Please enter your valid email address!";
-      errors++;
+    } else {
+      if (!CommonService.isEMailValid(input.email)) {
+        localInputState["emailError"] =
+          "Please enter your valid email address!";
+        errors++;
       }
     }
-    
-    if(input.password === ""){
+
+    if (input.password === "") {
       localInputState["passwordError"] = "Please enter your password!";
       errors++;
-      
-    }else{
-      if(input.password?.length !== 8 ){
+    } else {
+      if (input.password?.length !== 8) {
         localInputState["passwordError"] = "Please enter your valid password!";
-        errors++; 
-      }
-    } 
-
-    if(input.confirm_password === ""){
-      localInputState["confirm_passwordError"] = "Please enter your password!";
-      errors++;
-      
-    }else {
-      if(input.confirm_password !== input.password){
-        localInputState["confirm_passwordError"] = "Please enter your valid confirm password!";
-        errors++; 
+        errors++;
       }
     }
-    
 
-    setInput({...input, ...localInputState})
+    if (input.confirm_password === "") {
+      localInputState["confirm_passwordError"] = "Please enter your password!";
+      errors++;
+    } else {
+      if (input.confirm_password !== input.password) {
+        localInputState["confirm_passwordError"] =
+          "Please enter your valid confirm password!";
+        errors++;
+      }
+    }
 
+    setInput({ ...input, ...localInputState });
 
-    if(errors > 0 ){
-      return
+    if (errors > 0) {
+      return;
     }
 
     let data = {
@@ -160,7 +158,8 @@ const Register = () => {
               />
             </div>
             <div className="font20 bold general-text white-text">
-              Create a <span className="primary-text">SKYBIZ</span> Profile
+              Create a <span className="primary-text">TRAVEL PLANNER</span>{" "}
+              Profile
             </div>
             <div className="font10 white-text" style={{ marginTop: 12 }}>
               Already have an account? Login
@@ -185,12 +184,10 @@ const Register = () => {
               </div>
             </div>
             <div className={classes.register_side}>
-
-      
               <div className={classes.inner_wrapper}>
                 <MyInput
                   label="First Name"
-                  placeholder="E.g Tanveer"
+                  placeholder="E.g AASIF"
                   onChange={(val) =>
                     inputChange(val.target.value, "first_name")
                   }
@@ -200,7 +197,7 @@ const Register = () => {
                 />
                 <MyInput
                   label="Surname"
-                  placeholder="E.g Ahmad"
+                  placeholder="E.g GANI"
                   onChange={(val) => inputChange(val.target.value, "surname")}
                   value={input.surname}
                   type="text"
@@ -244,7 +241,6 @@ const Register = () => {
                   label="I have read and understood the Terms & Conditions and Privacy Policy."
                   onChange={() => setAcceptPolicy(!acceptPolicy)}
                   checked={acceptPolicy}
-                  
                 />
                 <MyButton
                   style={{
