@@ -11088,3 +11088,16 @@ button.social-button.google span.label {
   font-size: 12px;
   padding-top: 6px;
 }
+
+
+
+
+/* FORM STYLING STARTS  */
+.form_wrapper{
+  /* width: 50%; */
+  padding: 40px 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

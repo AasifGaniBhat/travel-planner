@@ -172,19 +172,6 @@ const Header = () => {
               Hotels
             </div>
             <div
-              className={classes.Profile}
-              onClick={profile}
-              style={{ cursor: "pointer" }}
-            >
-              {/* <img
-                src="/images/iustimages/cab1.png"
-                width={15}
-                height={15}
-                alt=""
-              /> */}
-              Profile
-            </div>
-            <div
               className={classes.Travelguide}
               onClick={Travelguide}
               style={{ cursor: "pointer" }}
@@ -197,9 +184,19 @@ const Header = () => {
               /> */}
               Travel Guide
             </div>
-            <div className={classes.login_register} onClick={loginPage}>
-              Create Account
+            <div
+              className={classes.Profile}
+              onClick={profile}
+              style={{ cursor: "pointer" }}
+            >
+
+              Profile
             </div>
+
+            {/* <div className={classes.login_register} onClick={loginPage}>
+              Create Account
+            </div> */}
+
           </div>
         </div>
       </ContentContainer>
@@ -207,7 +204,7 @@ const Header = () => {
         <LoginModal
           showModal={showLoginModal}
           onHide={() => setShowLoginModal(false)}
-          // t={t}
+        // t={t}
         />
       </div>
     </div>

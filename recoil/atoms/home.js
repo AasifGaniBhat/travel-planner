@@ -336,3 +336,10 @@ export const brandsState = atom({
 // {label:"Accessories", image :"/images/cards/redcompra.png", route:"/accessories"},
 // {label:"Kitchen", image :"/images/cards/redcompra.png", route:"/kitchen"},
 // {label:"Books", image :"/images/cards/redcompra.png", route:"/books"},
+
+
+
+export const currentEventState = atom({
+  key: "currentEventState",
+  default: null
+})

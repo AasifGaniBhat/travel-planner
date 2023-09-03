@@ -4,16 +4,46 @@ import classes from "./profile.module.less";
 import { useTranslation } from "react-i18next";
 import MainWrapper from "../../components/ui/wrapper/wrapper";
 import Head from "next/head";
-import Header from "../../components/ui/header";
 import EventHeading from "../../components/headings";
 import Tabs from "../../components/ui/tabs/tabs";
-import EventsGallery from "../../components/Events-gallery";
-import PackageDetails from "../package-details";
+import DateService from "../../services/dateService";
 const Profile = () => {
   const { t } = useTranslation("common");
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const tabs = ["Kashmir", "Outside"];
+  const tabs = ["Upcoming Bookings", "Past Bookings"];
+
+
+  const [bookings, setBookings] = useState([
+    { id: 0, title: "3 days 2 nights", Location: "Gulmarg", date: "03/09/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+    { id: 1, title: "3 days 2 nights", Location: "Gulmarg", date: "03/07/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+    { id: 2, title: "3 days 2 nights", Location: "Gulmarg", date: "03/08/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+    { id: 3, title: "3 days 2 nights", Location: "Gulmarg", date: "03/10/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+    { id: 4, title: "3 days 2 nights", Location: "Gulmarg", date: "03/11/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+    { id: 5, title: "3 days 2 nights", Location: "Gulmarg", date: "03/01/2024", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
+  ])
+
+  const currentDate = new Date().getTime();
+
+
+
+
+  const renderBooking = booking => {
+    return (
+      <div className="booking">
+        <div className="title">{booking.title}</div>
+        <div>
+          <span>{booking.date}</span>
+          <span>{booking.location}</span>
+          <span>{booking.guide}</span>
+          <span>{booking.vehicle}</span>
+          <span>{booking.hotel}</span>
+        </div>
+      </div>
+    )
+  }
+
+
   return (
     <MainWrapper t={t}>
       <div className={classes.container}>
@@ -58,14 +88,33 @@ const Profile = () => {
           </div>
           <div className={classes.tabs_container}>
             <Tabs data={tabs} setTab={setSelectedTab} />
-            {selectedTab === 0 ? (
-              <img
-                src={"/images/iustimages/cabb.png"}
-                style={{ width: "50", border_radius: "20" }}
-              />
-            ) : (
-              "outside packages"
-            )}
+            {selectedTab === 0 ?
+
+              <div>
+                {bookings?.map(booking => {
+
+                  let bookingdate = new Date(DateService.changeDateFormat(booking.date, "dd/mm/yyyy", "yyyy-mm-dd"))
+
+
+                  if (bookingdate > currentDate) {
+                    return renderBooking(booking)
+                  }
+                })}
+              </div>
+
+              : (
+                <div>
+                  {bookings?.map(booking => {
+
+                    let bookingdate = new Date(DateService.changeDateFormat(booking.date, "dd/mm/yyyy", "yyyy-mm-dd"))
+
+
+                    if (bookingdate < currentDate) {
+                      return renderBooking(booking)
+                    }
+                  })}
+                </div>
+              )}
           </div>
         </ContentContainer>
       </div>

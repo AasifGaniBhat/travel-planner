@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import MainWrapper from "../../components/ui/wrapper/wrapper";
 import Head from "next/head";
 import EventHeading from "../../components/headings";
+import ContentContainer from "../../components/ui/content-container/content-container";
 
 const Experiences = (props) => {
   const { t } = useTranslation("common");
@@ -73,7 +74,7 @@ const Experiences = (props) => {
               crossOrigin="anonymous"
             />
           </Head>
-          <>
+          <ContentContainer>
             <EventHeading label="Experiences" />
             <div className={classes.Experiences_main_cont}>
               {Experiencespage.map((Experiences) => {
@@ -88,7 +89,7 @@ const Experiences = (props) => {
                 );
               })}
             </div>
-          </>
+          </ContentContainer>
         </div>
       </MainWrapper>
     </>

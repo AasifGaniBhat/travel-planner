@@ -4,7 +4,7 @@ import classes from "./my-input.module.less";
 
 const MyInput = (props) => {
 
-  console.log({props})
+  console.log({ props })
   return (
     <div
       className={classes.input_wrapper}
@@ -14,7 +14,7 @@ const MyInput = (props) => {
 
       <div className={classes.inner_input_wrapper} style={props.wrapperStyle}>
         {props.leftIcon ? (
-          <Image src={props.leftIcon} alt="left-icon" width={20} height={20}  />
+          <Image src={props.leftIcon} alt="left-icon" width={20} height={20} />
         ) : null}
 
         <input
@@ -37,7 +37,7 @@ const MyInput = (props) => {
       </div>
 
 
-      {props.error? <div className={classes.error}>{props.error}</div>: null}
+      {props.error ? <div className={classes.error}>{props.error}</div> : null}
     </div>
   );
 };

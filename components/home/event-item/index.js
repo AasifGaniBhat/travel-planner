@@ -1,9 +1,9 @@
 import classes from "./event-item.module.less";
 
-const EventItem = ({ event, index }) => {
+const EventItem = ({ event, index, onClick }) => {
 
   return (
-    <div className={classes.event_single_item} key={index}>
+    <div className={classes.event_single_item} key={index} onClick={onClick}>
       <img src="/images/iustimages/image8.jpg" alt="" />
       <div className={classes.title}>{event.title}</div>
       <div className={classes.desc}>{event.body}</div>
