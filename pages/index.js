@@ -106,11 +106,7 @@ function Home() {
                 <Slide>
                     {initSlides.map((slideImage, index) => (
                         <div key={index}>
-                            <div
-                                style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}
-                            >
-                                {/* <span style={spanStyle}>{slideImage.caption}</span> */}
-                            </div>
+                            <div style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}></div>
                         </div>
                     ))}
                 </Slide>
