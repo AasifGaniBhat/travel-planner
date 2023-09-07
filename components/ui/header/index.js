@@ -14,7 +14,7 @@ const Header = () => {
   const cartItems = useRecoilState(cartListState);
   const totalCartValue = useRecoilValue(totalCartValueState);
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("jhgfds");
   const [searchOption, setSearchOption] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const options = [
@@ -27,7 +27,7 @@ const Header = () => {
   // console.log("cart....", cartItems[0]);
   const searchFunction = () => {
     router.push("/search-page");
-  };
+  }
 
   // const gotoCartPage = () => {
   //   router.push("/cart-page");
@@ -67,30 +67,9 @@ const Header = () => {
       <ContentContainer>
         <div className={classes.main_wrapper_inner}>
           <div className={classes.logo_container} onClick={returnHome}>
-            {/* <Image
-              src={"/images/iustlogo2.webp"}
-              width={120}
-              height={80}
-              alt=""
-              onClick={returnHome}
-            />  */}
             Travel Planner
           </div>
 
-          {/* <div className={classes.search_bar}>
-            <SearchBar
-              label="Search"
-              placeholder="search products"
-              onFocus={searchFunction}
-              onChange={(e) => setSearchOption(e)}
-              onChangeInput={(e) => setSearch(e.target.value)}
-              value={search}
-              options={options}
-              border={false}
-              sugesstions={true}
-              searchHistory={search}
-            />
-          </div> */}
 
           <div className={classes.cart_login}>
             <div
@@ -98,31 +77,12 @@ const Header = () => {
               onClick={home}
               style={{ cursor: "pointer" }}
             >
-              {/* <img
-                src="/images/iustimages/log1.png"
-                width={10}
-                height={15}
-                alt=""
-              /> */}
               Home
             </div>
             <div
-              // style={{ display: "flex" }}
               className={classes.cart}
               onClick={gotoPhotopackage}
             >
-              {/* <Image
-                src={"/images/icons/home/heart-filled.png"}
-                width={34}
-                height={34}
-                alt=""
-              /> */}
-              {/* <img
-                src="/images/iustimages/dest1.png"
-                width={15}
-                height={15}
-                alt=""
-              /> */}
               Destinations
             </div>
             <div
@@ -130,18 +90,6 @@ const Header = () => {
               className={classes.cart}
               onClick={gotoExperiences}
             >
-              {/* <Image
-                src={"/images/general/icons8-fast-cart-60.png"}
-                width={34}
-                height={34}
-                alt=""
-              /> */}
-              {/* <img
-                src="/images/iustimages/exp1.png"
-                width={15}
-                height={15}
-                alt=""
-              /> */}
               Experience
             </div>
 
@@ -150,12 +98,6 @@ const Header = () => {
               onClick={gotoCabs}
               style={{ cursor: "pointer" }}
             >
-              {/* <img
-                src="/images/iustimages/cab1.png"
-                width={15}
-                height={15}
-                alt=""
-              /> */}
               Cabs
             </div>
             <div
@@ -163,12 +105,6 @@ const Header = () => {
               onClick={hotels}
               style={{ cursor: "pointer" }}
             >
-              {/* <img
-                src="/images/iustimages/hot1.png"
-                width={15}
-                height={10}
-                alt=""
-              /> */}
               Hotels
             </div>
             <div
@@ -176,12 +112,7 @@ const Header = () => {
               onClick={Travelguide}
               style={{ cursor: "pointer" }}
             >
-              {/* <img
-                src="/images/iustimages/cab1.png"
-                width={15}
-                height={15}
-                alt=""
-              /> */}
+
               Travel Guide
             </div>
             <div

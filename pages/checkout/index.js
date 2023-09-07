@@ -29,21 +29,29 @@ const Checkout = () => {
 
         let error = `${type}Error`
 
-        setInputs({ ...inputs, [type]: val, [error]: null })
+        if (type === "phone") {
+            let formattedPhone = CommonService.phoneNumberFormat(val, 10);
+
+            console.log({ formattedPhone })
+            setInputs({ ...inputs, [type]: formattedPhone, [error]: null })
+        } else {
+
+            setInputs({ ...inputs, [type]: val, [error]: null })
+
+        }
+
+
 
     }
 
 
     const isValid = () => {
-
-
         let localInputs = CommonService.copyObject(inputs)
 
         let errors = 0;
         if (!inputs.name) {
 
             localInputs["nameError"] = "Please enter a name"
-            // setInputs({ ...inputs, nameError: "Please enter name" });
             errors++;
         }
 
@@ -54,24 +62,35 @@ const Checkout = () => {
 
         if (!inputs.address) {
             localInputs["addressError"] = "Please enter your address"
-            // setInputs({ ...inputs, addressError: "Please enter your address" });
             errors++;
         }
 
         if (!inputs.email) {
             localInputs["emailError"] = "Please enter email"
-            // setInputs({ ...inputs, emailError: "Please enter email" });
             errors++;
         }
 
         if (!inputs.aadhar) {
             localInputs["aadharError"] = "Please enter aadhar number"
-            // setInputs({ ...inputs, aadharError: "Please enter aadhar" });
             errors++;
         }
         if (!inputs.passengers) {
             localInputs["passengersError"] = "Please enter your no of passengers"
-            // setInputs({ ...inputs, passengersError: "Please enter your no of passengers" });
+            errors++;
+        }
+
+        if (inputs.passengers > 5) {
+            localInputs["passengersError"] = "Please enter les than 5 passengers"
+            errors++;
+        }
+
+        if (inputs.phone.length !== 10) {
+            localInputs["phoneError"] = "Please enter your 10 digit phone number"
+            errors++;
+        }
+
+        if (!CommonService.isEMailValid(inputs.email)) {
+            localInputs["emailError"] = "Please enter valid email"
             errors++;
         }
 
@@ -129,8 +148,6 @@ const Checkout = () => {
         <MainWrapper t={t}>
 
             <ContentContainer>
-
-
                 <div className="form_wrapper">
 
                     <MyInput
@@ -146,7 +163,7 @@ const Checkout = () => {
                     <MyInput
                         label="Phone"
                         placeholder="phone"
-                        type="text"
+                        type="number"
                         onChange={(val) => onChange(val.target.value, "phone")}
                         value={inputs.phone}
                         // error={inputs.phoneError ? true : false}
@@ -176,7 +193,7 @@ const Checkout = () => {
                     <MyInput
                         label="Aadhar"
                         placeholder="aadhar"
-                        type="text"
+                        type="email"
                         onChange={(val) => onChange(val.target.value, "aadhar")}
                         value={inputs.aadhar}
                         // error={inputs.aadharError ? true : false}

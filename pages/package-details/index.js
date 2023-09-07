@@ -53,7 +53,7 @@ const PackageDetails = () => {
         <ContentContainer>
           <div className={classes.package}>
             <div className={classes.img_container}>
-              <img src="/images/iustimages/image1.jpg" alt="package" />
+              <img src="/images/iustimages/image3.jpg" alt="package" />
             </div>
 
             <div className={classes.package_details}>
