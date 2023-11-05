@@ -42,7 +42,7 @@ function ManageAccount() {
 
   const [tabsMenu, setTabMenu] = useState([
     { name: "Account", active: true },
-    { name: "Address", active: false },
+    // { name: "Address", active: false },
   ]);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ function ManageAccount() {
     router.push("/login");
   };
 
-  let userData = loginData?.user;
+  let userData = loginData;
 
   const onChange = (val, type) => {
     setAddressItems({ ...addressItems, [type]: val });
@@ -207,7 +207,7 @@ function ManageAccount() {
                   height={200}
                   alt=""
                 />
-                <span className="font11 bold">{userData?.f_name}</span>
+                <span className="font11 bold">{userData?.name}</span>
               </div>
             </div>
             <div className={classes.account_wrapper}>
@@ -235,17 +235,17 @@ function ManageAccount() {
                     <div className={classes.edit_container}>
                       <span className="bold font12">Personal Information</span>
                       <div className={classes.address_actions}>
-                        <span className={classes.edit + " bold font12"}>
+                        {/* <span className={classes.edit + " bold font12"}>
                           Edit
-                        </span>
+                        </span> */}
                       </div>
                     </div>
-                    <span>{userData?.f_name + " " + userData?.l_name}</span>
+                    <span>{userData?.name}</span>
                     {/* <span>{user.gender}</span> */}
                   </div>
                   <div className={classes.account_item}>
                     <span className="bold font12">Contact Number</span>
-                    <span>{userData?.phone}</span>
+                    <span>{userData?.mobile}</span>
                   </div>
                   <div className={classes.account_item}>
                     <span className="bold font12">Email</span>

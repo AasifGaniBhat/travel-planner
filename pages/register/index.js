@@ -20,9 +20,6 @@ const Register = () => {
   const [input, setInput] = useState({
     first_name: "",
     surname: "",
-    birthdate: "",
-    gender: "",
-    post_code: "",
     mobile: "",
     email: "",
     password: "",
@@ -30,12 +27,12 @@ const Register = () => {
     policy: acceptPolicy,
   });
   const images = [
-    "wall1.jpg",
-    "wall2.jpg",
-    "wall3.jpeg",
-    "wall4.jpeg",
-    "wall5.jpg",
-    "wall6.jpeg",
+    // "wall1.jpg",
+    // "wall2.jpg",
+    // "wall3.jpeg",
+    // "wall4.jpeg",
+    // "wall5.jpg",
+    // "wall6.jpeg",
     // "wall1.jpeg",
     // "wall2.jpg",
     // "wall3.jpeg",
@@ -115,6 +112,8 @@ const Register = () => {
       }
     }
 
+    console.log({ localInputState });
+
     setInput({ ...input, ...localInputState });
 
     if (errors > 0) {
@@ -122,9 +121,8 @@ const Register = () => {
     }
 
     let data = {
-      f_name: input.first_name,
-      l_name: input.surname,
-      phone: input.mobile,
+      name: input.first_name + " " + input.surname,
+      mobile: input.mobile,
       email: input.email,
       password: input.password,
     };
@@ -133,6 +131,15 @@ const Register = () => {
     RegisterFunc({
       callback: (res) => {
         console.log("Register func res", res);
+
+        if (res?.access_token) {
+          localStorage.setItem(
+            "loginData",
+            JSON.stringify({ ...res.data, access_token: res.access_token })
+          );
+
+          router.push("/");
+        }
       },
       data: data,
     });

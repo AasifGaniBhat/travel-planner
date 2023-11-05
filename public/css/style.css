@@ -11089,11 +11089,8 @@ button.social-button.google span.label {
   padding-top: 6px;
 }
 
-
-
-
 /* FORM STYLING STARTS  */
-.form_wrapper{
+.form_wrapper {
   /* width: 50%; */
   padding: 40px 25%;
   display: flex;
@@ -11101,3 +11098,5 @@ button.social-button.google span.label {
   justify-content: center;
   align-items: center;
 }
+/*bookings*/
+

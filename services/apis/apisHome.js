@@ -1,15 +1,20 @@
 import {
   BANNERS,
+  BOOKING,
   BRANDS,
+  CABTYPES,
   CATEGORIES,
   CATEGORY_PRODUCTS,
   EVENTS,
+  GUIDES,
+  HOTELS,
   LATEST_PRODUCTS,
+  MY_BOOKINGS,
   PRODUCTS_FROM_CATEGORY,
   WISHLIST,
 } from "../constants/apiEndPointsHome";
 
-import { GetApi } from "./crudApis";
+import { GetApi, PostApi } from "./crudApis";
 
 export const LatestProducts = () => GetApi(LATEST_PRODUCTS);
 export const ProductsOfCategory = (category_id) =>
@@ -17,4 +22,9 @@ export const ProductsOfCategory = (category_id) =>
 export const Categories = () => GetApi(CATEGORIES);
 export const Brands = () => GetApi(BRANDS);
 export const Banners = () => GetApi(BANNERS);
-export const GetEvents = () => GetApi(EVENTS)
+export const GetEvents = () => GetApi(EVENTS);
+export const GetCabTypes = () => GetApi(CABTYPES);
+export const GetHotels = () => GetApi(HOTELS);
+export const GetGuides = () => GetApi(GUIDES);
+export const PurchaseBooking = () => PostApi(BOOKING);
+export const MyBookings = () => PostApi(MY_BOOKINGS);

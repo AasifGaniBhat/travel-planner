@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContentContainer from "../../components/ui/content-container/content-container";
 import classes from "./profile.module.less";
 import { useTranslation } from "react-i18next";
@@ -7,42 +7,86 @@ import Head from "next/head";
 import EventHeading from "../../components/headings";
 import Tabs from "../../components/ui/tabs/tabs";
 import DateService from "../../services/dateService";
+import { MyBookings } from "../../services/apis/apisHome";
+import { useRecoilValue } from "recoil";
+import { loginDataState } from "../../recoil/atoms/common";
+import CommonService from "../../services/commonService";
 const Profile = () => {
   const { t } = useTranslation("common");
   const [selectedTab, setSelectedTab] = useState(0);
 
+  //apis
+  const getMyBookings = MyBookings();
+
+  // recoil states
+  const [loginData, setLoginData] = useState(null);
+
   const tabs = ["Upcoming Bookings", "Past Bookings"];
 
+  const [bookings, setBookings] = useState([]);
 
-  const [bookings, setBookings] = useState([
-    { id: 0, title: "3 days 2 nights", Location: "Gulmarg", date: "03/09/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-    { id: 1, title: "3 days 2 nights", Location: "Gulmarg", date: "03/07/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-    { id: 2, title: "3 days 2 nights", Location: "Gulmarg", date: "03/08/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-    { id: 3, title: "3 days 2 nights", Location: "Gulmarg", date: "03/10/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-    { id: 4, title: "3 days 2 nights", Location: "Gulmarg", date: "03/11/2023", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-    { id: 5, title: "3 days 2 nights", Location: "Gulmarg", date: "03/01/2024", vehicle: "Taveera", guide: "Dave", passengers: "5", hotel: "Shahi Mehal" },
-  ])
+  const currentDate = new Date().toDateString();
 
-  const currentDate = new Date().getTime();
+  useEffect(() => {
+    let logindata = CommonService.getLocalEncryp("loginData");
 
+    console.log({ logindata });
 
+    if (logindata) {
+      setLoginData(loginData);
+      getMyBookings({
+        callback: (res) => {
+          if (res?.data) {
+            setBookings(res.data);
+          }
+        },
 
+        data: { user_id: logindata?.id },
+      });
+    }
+  }, []);
 
-  const renderBooking = booking => {
+  console.log({ bookings });
+
+  const renderBooking = (booking) => {
     return (
-      <div className="booking">
-        <div className="title">{booking.title}</div>
-        <div>
-          <span>{booking.date}</span>
-          <span>{booking.location}</span>
-          <span>{booking.guide}</span>
-          <span>{booking.vehicle}</span>
-          <span>{booking.hotel}</span>
+      <div className={classes.booking}>
+        <div className={classes.title}>{booking.title}</div>
+        <div className={classes.booking_details}>
+          <span className={classes.title_details}>
+            {booking?.package?.name}
+          </span>
+          <span className={classes.title_details}>
+            {booking?.package?.pacakage_details}
+          </span>
+          <span className={classes.title_details}>
+            <span className={classes.label}>Date : </span>
+            {booking.booking_date.split(" ")[0]}
+          </span>
+          <span className={classes.title_details}>
+            <span className={classes.label}>Total Amount : </span>
+            {booking.amount}
+          </span>
+          {/* <span className={classes.title_details}>
+            <span className={classes.label}>Location : </span>
+            {booking.Location}
+          </span> */}
+          {/* <span className={classes.title_details}>
+            <span className={classes.label}>Guide name : </span>
+            {booking.guide}
+          </span>
+          <span className={classes.title_details}>
+            <span className={classes.label}>Cab : </span>
+            {booking.vehicle}
+          </span>
+          <span className={classes.title_details}>
+            <span className={classes.label}>Hotel : </span>
+            {booking.hotel}
+          </span> */}
         </div>
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
     <MainWrapper t={t}>
@@ -66,55 +110,68 @@ const Profile = () => {
             </div>
             <div className={classes.profile_body}>
               <div className={classes.details_item}>
-                <span className={classes.label}>NAME : </span>Aasif Gani{" "}
+                <span className={classes.label}>NAME : </span>
+                {loginData?.name}
               </div>
-              <div className={classes.details_item}>
+              {/* <div className={classes.details_item}>
                 <span className={classes.label}>ADDRESS : </span> Tiken batpora{" "}
-              </div>
-              <div className={classes.details_item}>
+              </div> */}
+              {/* <div className={classes.details_item}>
                 <span className={classes.label}>CITY : </span> Pulwama{" "}
+              </div> */}
+              <div className={classes.details_item}>
+                <span className={classes.label}>CONTACT NO : </span>
+                {loginData?.phone}
               </div>
               <div className={classes.details_item}>
-                <span className={classes.label}>CONTACT NO : </span> 7889989660{" "}
+                <span className={classes.label}>EMAIL : </span>
+                {loginData?.email}
               </div>
-              <div className={classes.details_item}>
-                <span className={classes.label}>EMAIL : </span>{" "}
-                mohammadaasif911@gmail.com{" "}
-              </div>
-              <div className={classes.details_item}>
+              {/* <div className={classes.details_item}>
                 <span className={classes.label}>DESTINATION:</span>Gulmarg
-              </div>
+              </div> */}
             </div>
           </div>
           <div className={classes.tabs_container}>
             <Tabs data={tabs} setTab={setSelectedTab} />
-            {selectedTab === 0 ?
+            {selectedTab === 0 ? (
+              <div className={classes.booking_container}>
+                {bookings &&
+                  bookings.length &&
+                  bookings?.map((booking) => {
+                    let bookingdate = new Date(
+                      // DateService.changeDateFormat(
+                      booking.booking_date.split(" ")[0]
+                      // "dd/mm/yyyy",
+                      // "yyyy-mm-dd"
+                      // )
+                    ).toDateString();
 
-              <div>
-                {bookings?.map(booking => {
+                    console.log({ bookingdate });
+                    console.log({ currentDate });
 
-                  let bookingdate = new Date(DateService.changeDateFormat(booking.date, "dd/mm/yyyy", "yyyy-mm-dd"))
+                    if (bookingdate >= currentDate) {
+                      return renderBooking(booking);
+                    }
+                  })}
+              </div>
+            ) : (
+              <div className={classes.booking_container}>
+                {bookings?.map((booking) => {
+                  let bookingdate = new Date(
+                    DateService.changeDateFormat(
+                      booking.date,
+                      "dd/mm/yyyy",
+                      "yyyy-mm-dd"
+                    )
+                  );
 
-
-                  if (bookingdate > currentDate) {
-                    return renderBooking(booking)
+                  if (bookingdate < currentDate) {
+                    return renderBooking(booking);
                   }
                 })}
               </div>
-
-              : (
-                <div>
-                  {bookings?.map(booking => {
-
-                    let bookingdate = new Date(DateService.changeDateFormat(booking.date, "dd/mm/yyyy", "yyyy-mm-dd"))
-
-
-                    if (bookingdate < currentDate) {
-                      return renderBooking(booking)
-                    }
-                  })}
-                </div>
-              )}
+            )}
           </div>
         </ContentContainer>
       </div>

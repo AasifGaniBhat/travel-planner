@@ -1,9 +1,7 @@
 const baseUrls = {
-  baseUrlBus: "https://jsonplaceholder.typicode.com",
+  baseUrlBus: "http://127.0.0.1:8000",
   baseUrAT: "https://newstg2-at.kupos.cl",
-  baseUrl: "https://jsonplaceholder.typicode.com",
+  baseUrl: "http://127.0.0.1:8000",
   mediaUrl: "https://skybizcdn.keef.org.in/",
-  // baseUrlBus: "https://kupos.cl",
-  // baseUrlMain: "https://kupos.cl",
 };
 export default baseUrls;

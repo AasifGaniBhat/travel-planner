@@ -19,9 +19,9 @@ const Login = () => {
 
   const LoginFunc = LoginUser();
 
-  const [forgotEmail, setForgotEmail] = useState("")
+  const [forgotEmail, setForgotEmail] = useState("");
   const [staySigned, setStaySigned] = useState(false);
-  const [forgotPassword, setForgotPassword] = useState(true);
+  const [forgotPassword, setForgotPassword] = useState(false);
   let forgot = null;
   const [inputsdata, setInputsdata] = useState({
     login: "",
@@ -31,7 +31,6 @@ const Login = () => {
   const getInput = (val, type) => {
     setInputsdata({ ...inputsdata, [type]: val });
   };
-
 
   useEffect(() => {
     if (loginData && loginData?.token) {
@@ -45,7 +44,7 @@ const Login = () => {
     console.log("login data", inputsdata);
 
     let data = {
-      phone: inputsdata.login,
+      mobile: inputsdata.login,
       password: inputsdata.password,
     };
 
@@ -54,9 +53,10 @@ const Login = () => {
         console.log("response from login api---", res);
         //save data to local store and recoil and move user to my account
 
-        if (res && res.data && res.data.token) {
-          setLoginData(res.data);
-          CommonService.setLocalEncryp("loginData", res.data);
+        if (res && res.data && res.access_token) {
+          const myLoginData = { ...res.data, access_token: res.access_token };
+          setLoginData(myLoginData);
+          CommonService.setLocalEncryp("loginData", myLoginData);
           router.push("/my-account");
         }
       },
@@ -67,10 +67,9 @@ const Login = () => {
     forgot = val;
   };
   const gotoRegister = () => {
-    router.push('/register')
-  }
+    router.push("/register");
+  };
 
-  
   return (
     <>
       <div className={classes.main_wrapper}>
@@ -105,8 +104,8 @@ const Login = () => {
                 You can now login with an OTP we will send on your email address
                 or verified mobile number. <br />
                 <br />
-                Access your TRAVEL PLANNER account using your email address to add and
-                verify your mobile number.
+                Access your TRAVEL PLANNER account using your email address to
+                add and verify your mobile number.
               </div>
             </div>
 
@@ -118,8 +117,16 @@ const Login = () => {
             </div>
           </div>
         </div>
-    
-        {forgotPassword ? <ForgotComponent setForgotPassword={setForgotPassword} forgotPassword={forgotPassword} forgotEmail={forgotEmail} setForgotEmail={setForgotEmail} proceedForgot={proceedForgot} /> : (
+
+        {forgotPassword ? (
+          <ForgotComponent
+            setForgotPassword={setForgotPassword}
+            forgotPassword={forgotPassword}
+            forgotEmail={forgotEmail}
+            setForgotEmail={setForgotEmail}
+            proceedForgot={proceedForgot}
+          />
+        ) : (
           <div className={classes.login_side}>
             <MyInput
               border={true}
@@ -129,7 +136,6 @@ const Login = () => {
               value={inputsdata.login}
               type="text"
               error={inputsdata?.loginError}
-
             />
             <MyInput
               border={true}
@@ -138,7 +144,7 @@ const Login = () => {
               onChange={(val) => getInput(val.target.value, "password")}
               value={inputsdata.password}
               type="password"
-            // onRightIconClick={() => console.log("Hello")}
+              // onRightIconClick={() => console.log("Hello")}
             />
             <div
               className={classes.option_links}
@@ -155,7 +161,12 @@ const Login = () => {
             </div>
             <div className={classes.register_btn_wrapper + " font10"}>
               Don't have account ?{" "}
-              <span className={classes.register_btn + " bold"} onClick={gotoRegister}>Register</span>
+              <span
+                className={classes.register_btn + " bold"}
+                onClick={gotoRegister}
+              >
+                Register
+              </span>
             </div>
             <div className={classes.button_container}>
               <MyButton
@@ -175,10 +186,13 @@ const Login = () => {
 
 export default Login;
 
-
-
-const ForgotComponent = ({ setForgotPassword, forgotPassword, setForgotEmail, forgotEmail, proceedForgot }) => {
-
+const ForgotComponent = ({
+  setForgotPassword,
+  forgotPassword,
+  setForgotEmail,
+  forgotEmail,
+  proceedForgot,
+}) => {
   return (
     <div className={classes.forgot_wrapper}>
       <div className={classes.forgot_password}>
@@ -210,5 +224,5 @@ const ForgotComponent = ({ setForgotPassword, forgotPassword, setForgotEmail, fo
         />
       </div>
     </div>
-  )
-}
+  );
+};

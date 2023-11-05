@@ -1,74 +1,45 @@
-import React from "react";
-import classes from "./travelguide.module.less";
+import React, { useEffect, useState } from "react";
+import classes from "./Travelguide.module.less";
 import MainWrapper from "../../components/ui/wrapper/wrapper";
 import { useTranslation } from "react-i18next";
 import Head from "next/head";
 import { cartListState } from "../../recoil/atoms/cart";
 import EventHeading from "../../components/headings";
-const travelguide = (props) => {
+import ContentContainer from "../../components/ui/content-container/content-container";
+import { GetGuides } from "../../services/apis/apisHome";
+import baseUrls from "../../services/constants/baseUrls";
+const Guides = (props) => {
   const { t } = useTranslation("common");
-  const travelguidegallery = [
-    {
-      id: 0,
-      image: <img src="/images/iustimages/tr1.jpg" />,
-      desc: "Eveywhereist wanderer.",
-    },
-    {
-      id: 1,
-      image: <img src="/images/iustimages/tr2.jpeg" />,
-      desc: "Sane traveller.",
-    },
-    {
-      id: 2,
-      image: <img src="/images/iustimages/tr3.webp" />,
-      desc: "Travelling aqua.",
-    },
-    {
-      id: 3,
-      image: <img src="/images/iustimages/tr4.jpg" />,
-      desc: "Travelwoman.",
-    },
-    {
-      id: 4,
-      image: <img src="/images/iustimages/tr5.jpeg" />,
-      desc: "Travelman",
-    },
-    {
-      id: 5,
-      image: <img src="/images/iustimages/tr6.jpg" />,
-      desc: "Exploring every city.",
-    },
-    {
-      id: 6,
-      image: <img src="/images/iustimages/tr7.jpg" />,
-      desc: "Farther i can reach.",
-    },
-    {
-      id: 7,
-      image: <img src="/images/iustimages/tr8.jpg" />,
-      desc: "Voyage Ventures",
-    },
-    {
-      id: 8,
-      image: <img src="/images/iustimages/tr9.jpg" />,
-      desc: "Travel Trekkers",
-    },
-    {
-      id: 9,
-      image: <img src="/images/iustimages/tr10.jpeg" />,
-      desc: "Devoted traveller.",
-    },
-    {
-      id: 10,
-      image: <img src="/images/iustimages/tr11.webp" />,
-      desc: "Wanderlust Wonders.",
-    },
-    {
-      id: 11,
-      image: <img src="/images/iustimages/tr12.jpg" />,
-      desc: "Pathway Pioneers.",
-    },
-  ];
+
+  const [guides, setGuides] = useState([]);
+
+  const GetGuideFunc = GetGuides();
+
+  useEffect(() => {
+    GetGuideFunc({
+      callback: (res) => {
+        console.log("Response from guides api is..", res);
+
+        let guidesLocal = [];
+        if (res?.data?.data) {
+          res?.data?.data?.map((guide) => {
+            guidesLocal.push({
+              ...guide,
+              image:
+                baseUrls.baseUrl +
+                "/" +
+                res.mediaPath +
+                "/" +
+                guide.profile_pic,
+            });
+          });
+          setGuides(guidesLocal);
+        }
+      },
+    });
+  }, []);
+
+  console.log({ guides });
   return (
     <MainWrapper t={t}>
       <div className={classes.container}>
@@ -83,28 +54,28 @@ const travelguide = (props) => {
             crossOrigin="anonymous"
           />
         </Head>
-        <>
+        <ContentContainer>
           <EventHeading label="Guide Section" />
           <div className={classes.travelguide_main_container}>
-            {travelguidegallery.map((travelguide) => {
+            {guides.map((guide) => {
               return (
                 <div className={classes.travelguide_section}>
                   <div className={classes.travelguide_images}>
                     <div className={classes.travelguide_image}>
-                      {travelguide.image}
+                      <img src={guide.image} />
                     </div>
 
                     <div className={classes.travelguide_desc}>
-                      {travelguide.desc}
+                      {guide.details}
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-        </>
+        </ContentContainer>
       </div>
     </MainWrapper>
   );
 };
-export default travelguide;
+export default Guides;

@@ -1,38 +1,46 @@
 import React, { useEffect, useState } from "react";
-import classes from "./cabs.module.less";
+import classes from "./drivers.module.less";
 import MainWrapper from "../../components/ui/wrapper/wrapper";
 import { useTranslation } from "react-i18next";
 import Head from "next/head";
 import { cartListState } from "../../recoil/atoms/cart";
 import EventHeading from "../../components/headings";
 import ContentContainer from "../../components/ui/content-container/content-container";
-import { GetCabTypes } from "../../services/apis/apisHome";
+import { GetDrivers } from "../../services/apis/apisHome";
 import baseUrls from "../../services/constants/baseUrls";
-
-const Cabs = (props) => {
+import { faDriversLicense } from "@fortawesome/free-solid-svg-icons";
+const Drivers = (props) => {
   const { t } = useTranslation("common");
-  const [cabs, setCabs] = useState([]);
 
-  const GetCabTypesFunc = GetCabTypes();
+  const [drivers, setDrivers] = useState([]);
+
+  const GetDriverFunc = GetDrivers();
 
   useEffect(() => {
-    GetCabTypesFunc({
+    GetDriverFunc({
       callback: (res) => {
-        console.log("dfgjhkhdfgjhd", res);
+        console.log("Response from drivers api is..", res);
 
-        let cabsLocal = [];
+        let driversLocal = [];
         if (res?.data?.data) {
-          res?.data?.data?.map((cab) => {
-            cabsLocal.push({
-              ...cab,
-              image: baseUrls.baseUrl + "/" + res.mediaPath + "/" + cab.image,
+          res?.data?.data?.map((driver) => {
+            driversLocal.push({
+              ...driver,
+              image:
+                baseUrls.baseUrl +
+                "/" +
+                res.mediaPath +
+                "/" +
+                driver.profile_pic,
             });
           });
-          setCabs(cabsLocal);
+          setDrivers(driversLocal);
         }
       },
     });
   }, []);
+
+  console.log({ drivers });
   return (
     <MainWrapper t={t}>
       <div className={classes.container}>
@@ -48,17 +56,17 @@ const Cabs = (props) => {
           />
         </Head>
         <ContentContainer>
-          <EventHeading label="Cabs Section" />
-          <div className={classes.cabs_main_container}>
-            {cabs.map((cab) => {
-              console.log({ cab });
+          <EventHeading label="Driver_Section" />
+          <div className={classes.driver_section_main_container}>
+            {drivers.map((driver) => {
               return (
-                <div className={classes.cabs_section}>
-                  <div className={classes.cab_images}>
-                    <div className={classes.cabs_image}>
-                      <img src={cab.image} />,
+                <div className={classes.driver_section}>
+                  <div className={classes.driver_images}>
+                    <div className={classes.driver_image}>
+                      <img src={driver.image} />
                     </div>
-                    <div className={classes.cab_desc}>{cab.name}</div>
+
+                    <div className={classes.driver_desc}>{driver.details}</div>
                   </div>
                 </div>
               );
@@ -69,4 +77,4 @@ const Cabs = (props) => {
     </MainWrapper>
   );
 };
-export default Cabs;
+export default Drivers;

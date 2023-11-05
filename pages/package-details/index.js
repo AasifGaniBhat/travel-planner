@@ -19,10 +19,9 @@ const PackageDetails = () => {
     kuposModalErrorSuccessState
   );
 
-  const currentEvent = useRecoilValue(currentEventState)
+  const currentEvent = useRecoilValue(currentEventState);
 
-
-  console.log({ currentEvent })
+  console.log({ currentEvent });
 
   const buyNow = () => {
     // setModalErrorSuccessState({
@@ -31,7 +30,7 @@ const PackageDetails = () => {
     //   modalTitle: "Successfully Booked!",
     // });
 
-    router.push("/checkout")
+    router.push("/checkout");
   };
   return (
     <>
@@ -53,35 +52,45 @@ const PackageDetails = () => {
         <ContentContainer>
           <div className={classes.package}>
             <div className={classes.img_container}>
-              <img src="/images/iustimages/image1.jpg" alt="package" />
+              <img src={currentEvent?.image} alt="package" />
             </div>
 
             <div className={classes.package_details}>
-              <div className={classes.name}>{currentEvent?.title}</div>
-              <div className={classes.desc}>KASHMIR :HEAVEN ON EARTH</div>
+              <div className={classes.name}>{currentEvent?.name}</div>
+              <div className={classes.desc}>
+                {currentEvent?.pacakage_details}
+              </div>
 
               <div className={classes.details_item}>
-                <span className={classes.label}>Stay Period:</span> {currentEvent?.duration}
+                <span className={classes.label}>Stay Period:</span>{" "}
+                {currentEvent?.duration}
               </div>
               <div className={classes.details_item}>
-                <span className={classes.label}>Place of Visit:</span>{currentEvent?.place}
+                <span className={classes.label}>Place of Visit:</span>{" "}
+                {currentEvent?.destination?.name}
               </div>
-              <div className={classes.details_item}>
-                <span className={classes.label}>Number of Persons:</span>{currentEvent?.persons || 3}
+              {/* <div className={classes.details_item}>
+                <span className={classes.label}>Number of Persons:</span>
+                {currentEvent?.persons || 3}
                 Persons
+              </div> */}
+              <div className={classes.details_item}>
+                <span className={classes.label}>Vehicle Type:</span>
+
+                {currentEvent?.cab_type || "SUV"}
               </div>
               <div className={classes.details_item}>
-                <span className={classes.label}>Vehicle Type:</span>{currentEvent?.cab}
-              </div>
-              <div className={classes.details_item}>
-                <span className={classes.label}>Guide:</span>{currentEvent?.guide || "Sanes Trev"}
+                <span className={classes.label}>Guide:</span>
+                {currentEvent?.guide?.name || "Sanes Trev"}
               </div>
 
               <div className={classes.details_item}>
-                <span className={classes.hotel}>Hotel:</span>{currentEvent?.guide || "Vivanta Taj"}
+                <span className={classes.label}>Hotel:</span>
+                {currentEvent?.hotel?.name || "Vivanta Taj"}
               </div>
               <div className={classes.price}>
-                <span className={classes.label}>Package Price:</span>{currentEvent?.total_price || "30000"}
+                <span className={classes.label}>Package Price:</span>
+                {currentEvent?.price || "NA"}
               </div>
 
               <div className={classes.btn_container}>

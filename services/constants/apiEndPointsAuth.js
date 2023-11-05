@@ -1,3 +1,3 @@
-export const REGISTER = "auth/register";
-export const LOGIN = "auth/login";
+export const REGISTER = "api/v1/register";
+export const LOGIN = "api/v1/login";
 export const ADDRESSES = "customer/address";

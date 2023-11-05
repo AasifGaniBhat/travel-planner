@@ -12,49 +12,49 @@ const Experiences = (props) => {
     {
       id: 0,
       image: <img src="/images/iustimages/ex1.webp" />,
-      title: "taj",
+      title: "THE LALIT",
       desc: "We have seen the Opera House from different angles, but this one is what you will earn.",
     },
     {
       id: 1,
       image: <img src="/images/iustimages/ex2.webp" />,
-      title: "menu",
+      title: "VIVANTA",
       desc: "After ZNMD, our travel goals have found a true meaning",
     },
     {
       id: 2,
       image: <img src="/images/iustimages/ex3.webp" />,
-      title: "mno",
+      title: "AMBROSIA",
       desc: "The hot air balloon ride in Cappadocia is among major tourist attractions of Turkey. The ride takes you above a volcanic landscape and pleases you with golden sunset.",
     },
     {
       id: 3,
       image: <img src="/images/iustimages/ex4.webp" />,
-      title: "pari",
+      title: "FOUR SEASONS HOTELS AND RESORTS",
       desc: " The cherry of the top is added when you’re spending nights in the camps amidst several friendly emperor penguins.",
     },
     {
       id: 4,
       image: <img src="/images/iustimages/ex5.webp" />,
-      title: "nescafe",
+      title: "HOLIDAY INN",
       desc: "Kenya is considered the pilgrim for wildlife lovers. Right from game viewing to luxurious glamping experiences, you have everything sorted if you are a wild child!",
     },
     {
       id: 5,
       image: <img src="/images/iustimages/ex6.webp" />,
-      title: "parsa",
+      title: "HOTEL INDIGO",
       desc: "You must have hiked all your life, but have you thought of reaching the peak of world’s tallest peak?",
     },
     {
       id: 6,
       image: <img src="/images/iustimages/ex7.webp" />,
-      title: "gsagg",
+      title: "RODEWAY INN",
       desc: "If you ask where the most beautiful seabed is, the answer has to be the Great Barrier Reef.",
     },
     {
       id: 7,
       image: <img src="/images/iustimages/hero.jpg" />,
-      title: "alif",
+      title: "HILTON GARDEN INN",
       desc: "The Taj Mahal needs no introduction, as we have often seen people posting photographs with the Taj in cliche poses",
     },
   ];
@@ -82,8 +82,10 @@ const Experiences = (props) => {
                   <div className={classes.Experiences_details}>
                     <div className={classes.Experiences_section}>
                       <div className={classes.image}>{Experiences.image}</div>
-                      <div className={classes.title}>{Experiences.title}</div>
-                      <div className={classes.desc}>{Experiences.desc}</div>
+                      <div className={classes.experience_items}>
+                        <div className={classes.title}>{Experiences.title}</div>
+                        <div className={classes.desc}>{Experiences.desc}</div>
+                      </div>
                     </div>
                   </div>
                 );

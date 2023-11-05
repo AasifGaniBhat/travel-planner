@@ -1,219 +1,221 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ContentContainer from "../../components/ui/content-container/content-container"
-import MainWrapper from "../../components/ui/wrapper/wrapper"
+import ContentContainer from "../../components/ui/content-container/content-container";
+import MainWrapper from "../../components/ui/wrapper/wrapper";
 import { useTranslation } from "react-i18next";
 import MyInput from "../../components/ui/my-input";
 import { useState } from "react";
 import MyButton from "../../components/ui/my-button";
-import { useSetRecoilState } from "recoil";
-import { kuposModalErrorSuccessState } from "../../recoil/atoms/common";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  kuposModalErrorSuccessState,
+  loginDataState,
+} from "../../recoil/atoms/common";
 import CommonService from "../../services/commonService";
 import { useRouter } from "next/router";
+import { PurchaseBooking } from "../../services/apis/apisHome";
+import { currentEventState } from "../../recoil/atoms/home";
+import DateService from "../../services/dateService";
 
 const Checkout = () => {
+  const { t } = useTranslation("common");
+  const router = useRouter();
 
+  //recoil states
+  const setModalErrorSuccessState = useSetRecoilState(
+    kuposModalErrorSuccessState
+  );
+  const currentEvent = useRecoilValue(currentEventState);
+  const loginData = useRecoilValue(loginDataState);
 
-    const { t } = useTranslation("common");
-    const router = useRouter()
+  // APIS
 
-    //recoil states
-    const setModalErrorSuccessState = useSetRecoilState(
-        kuposModalErrorSuccessState
-    );
+  const purchaseBookingFunc = PurchaseBooking();
 
+  const [inputs, setInputs] = useState({});
 
-    const [inputs, setInputs] = useState({})
+  const onChange = (val, type) => {
+    let error = `${type}Error`;
 
+    setInputs({ ...inputs, [type]: val, [error]: null });
+  };
 
-    const onChange = (val, type) => {
+  const isValid = () => {
+    let localInputs = CommonService.copyObject(inputs);
 
-        let error = `${type}Error`
-
-        setInputs({ ...inputs, [type]: val, [error]: null })
-
+    let errors = 0;
+    if (!inputs.name) {
+      localInputs["nameError"] = "Please enter a name";
+      // setInputs({ ...inputs, nameError: "Please enter name" });
+      errors++;
     }
 
-
-    const isValid = () => {
-
-
-        let localInputs = CommonService.copyObject(inputs)
-
-        let errors = 0;
-        if (!inputs.name) {
-
-            localInputs["nameError"] = "Please enter a name"
-            // setInputs({ ...inputs, nameError: "Please enter name" });
-            errors++;
-        }
-
-        if (!inputs.phone) {
-            localInputs["phoneError"] = "Please enter your phone number"
-            errors++;
-        }
-
-        if (!inputs.address) {
-            localInputs["addressError"] = "Please enter your address"
-            // setInputs({ ...inputs, addressError: "Please enter your address" });
-            errors++;
-        }
-
-        if (!inputs.email) {
-            localInputs["emailError"] = "Please enter email"
-            // setInputs({ ...inputs, emailError: "Please enter email" });
-            errors++;
-        }
-
-        if (!inputs.aadhar) {
-            localInputs["aadharError"] = "Please enter aadhar number"
-            // setInputs({ ...inputs, aadharError: "Please enter aadhar" });
-            errors++;
-        }
-        if (!inputs.passengers) {
-            localInputs["passengersError"] = "Please enter your no of passengers"
-            // setInputs({ ...inputs, passengersError: "Please enter your no of passengers" });
-            errors++;
-        }
-
-        console.log({ localInputs })
-
-
-        setInputs({ ...inputs, ...localInputs })
-
-
-        if (errors > 0) {
-            return false
-        }
-
-        return true
+    if (!inputs.phone) {
+      localInputs["phoneError"] = "Please enter your phone number";
+      errors++;
     }
 
+    if (!inputs.address) {
+      localInputs["addressError"] = "Please enter your address";
+      // setInputs({ ...inputs, addressError: "Please enter your address" });
+      errors++;
+    }
 
-    console.log({ inputs })
-    console.log({ router })
+    if (!inputs.email) {
+      localInputs["emailError"] = "Please enter email";
+      // setInputs({ ...inputs, emailError: "Please enter email" });
+      errors++;
+    }
 
+    if (!inputs.aadhar) {
+      localInputs["aadharError"] = "Please enter aadhar number";
+      // setInputs({ ...inputs, aadharError: "Please enter aadhar" });
+      errors++;
+    }
+    if (!inputs.passengers) {
+      localInputs["passengersError"] = "Please enter your no of passengers";
+      // setInputs({ ...inputs, passengersError: "Please enter your no of passengers" });
+      errors++;
+    }
 
-    const submit = () => {
+    console.log({ localInputs });
 
-        if (!isValid()) {
-            return
-        }
+    setInputs({ ...inputs, ...localInputs });
 
+    if (errors > 0) {
+      return false;
+    }
 
-        let data = {
-            name: inputs.name,
-            name: inputs.name,
-            name: inputs.name,
-            name: inputs.name,
-            name: inputs.name,
-            name: inputs.name,
-            name: inputs.name,
-        }
+    return true;
+  };
 
-        setModalErrorSuccessState({
+  console.log({ inputs });
+  console.log({ router });
+
+  const submit = () => {
+    if (!isValid()) {
+      return;
+    }
+
+    let data = {
+      package_id: currentEvent.id,
+      user_id: loginData?.id,
+      amount: currentEvent.price,
+      trip_date: DateService.getTodayString("yyyy-mm-dd"),
+      passenger_data: {
+        name: inputs.name,
+        phone: inputs.phone,
+        address: inputs.address,
+        email: inputs.email,
+        aadhar: inputs.aadhar,
+        passengers: inputs.passengers,
+      },
+    };
+
+    purchaseBookingFunc({
+      callback: (res) => {
+        console.log("response from booking api", res);
+        if (res?.message == "SUCCESS") {
+          setModalErrorSuccessState({
             showModal: true,
             success: true,
             modalTitle: "Successfully Booked!",
             onButtonClick: () => {
-                setModalErrorSuccessState({});
-                router.push("/")
-            }
-        });
+              setModalErrorSuccessState({});
+              router.push("/");
+            },
+          });
+        } else {
+          setModalErrorSuccessState({
+            showModal: true,
+            success: false,
+            modalTitle:
+              "There is some issue in booking, Please try again after a while!",
+            onButtonClick: () => {
+              setModalErrorSuccessState({});
+              router.push("/");
+            },
+          });
+        }
+      },
+      data: data,
+    });
+  };
 
+  return (
+    <MainWrapper t={t}>
+      <ContentContainer>
+        <div className="form_wrapper">
+          <MyInput
+            label="Name"
+            placeholder="E.g AASIF"
+            type="text"
+            onChange={(val) => onChange(val.target.value, "name")}
+            value={inputs.name}
+            // error={inputs.nameError ? true : false}
+            error={inputs.nameError ? inputs.nameError : null}
+          />
 
+          <MyInput
+            label="Phone"
+            placeholder="E.g 1234567890"
+            type="text"
+            onChange={(val) => onChange(val.target.value, "phone")}
+            value={inputs.phone}
+            // error={inputs.phoneError ? true : false}
+            error={inputs.phoneError ? inputs.phoneError : null}
+          />
 
+          <MyInput
+            label=" Address"
+            placeholder="E.g kashmir"
+            type="text"
+            onChange={(val) => onChange(val.target.value, "address")}
+            value={inputs.address}
+            // error={inputs.addressError ? true : false}
+            error={inputs.addressError ? inputs.addressError : null}
+          />
 
-    }
+          <MyInput
+            label="Email"
+            placeholder="E.g someone@mail.com"
+            type="email"
+            onChange={(val) => onChange(val.target.value, "email")}
+            value={inputs.email}
+            // error={inputs.emailError ? true : false}
+            error={inputs.emailError ? inputs.emailError : null}
+          />
 
-    return (
-        <MainWrapper t={t}>
+          <MyInput
+            label="Aadhar"
+            placeholder="E.g 92912354367"
+            type="text"
+            onChange={(val) => onChange(val.target.value, "aadhar")}
+            value={inputs.aadhar}
+            // error={inputs.aadharError ? true : false}
+            error={inputs.aadharError ? inputs.aadharError : null}
+          />
 
-            <ContentContainer>
+          <MyInput
+            label="Passengers"
+            placeholder="E.g 2"
+            type="number"
+            onChange={(val) => onChange(val.target.value, "passengers")}
+            value={inputs.passengers}
+            // error={inputs.passengersError ? true : false}
+            error={inputs.passengersError ? inputs.passengersError : null}
+          />
 
-
-                <div className="form_wrapper">
-
-                    <MyInput
-                        label="Name"
-                        placeholder="name"
-                        type="text"
-                        onChange={(val) => onChange(val.target.value, "name")}
-                        value={inputs.name}
-                        // error={inputs.nameError ? true : false}
-                        error={inputs.nameError ? inputs.nameError : null}
-                    />
-
-                    <MyInput
-                        label="Phone"
-                        placeholder="phone"
-                        type="text"
-                        onChange={(val) => onChange(val.target.value, "phone")}
-                        value={inputs.phone}
-                        // error={inputs.phoneError ? true : false}
-                        error={inputs.phoneError ? inputs.phoneError : null}
-                    />
-
-                    <MyInput
-                        label="Address"
-                        placeholder="address"
-                        type="text"
-                        onChange={(val) => onChange(val.target.value, "address")}
-                        value={inputs.address}
-                        // error={inputs.addressError ? true : false}
-                        error={inputs.addressError ? inputs.addressError : null}
-                    />
-
-                    <MyInput
-                        label="Email"
-                        placeholder="email"
-                        type="email"
-                        onChange={(val) => onChange(val.target.value, "email")}
-                        value={inputs.email}
-                        // error={inputs.emailError ? true : false}
-                        error={inputs.emailError ? inputs.emailError : null}
-                    />
-
-                    <MyInput
-                        label="Aadhar"
-                        placeholder="aadhar"
-                        type="text"
-                        onChange={(val) => onChange(val.target.value, "aadhar")}
-                        value={inputs.aadhar}
-                        // error={inputs.aadharError ? true : false}
-                        error={inputs.aadharError ? inputs.aadharError : null}
-                    />
-
-                    <MyInput
-                        label="Passengers"
-                        placeholder="passengers"
-                        type="number"
-                        onChange={(val) => onChange(val.target.value, "passengers")}
-                        value={inputs.passengers}
-                        // error={inputs.passengersError ? true : false}
-                        error={inputs.passengersError ? inputs.passengersError : null}
-                    />
-
-                    <MyButton label="Checkout" onClick={submit} />
-
-
-
-
-                </div>
-
-
-
-
-            </ContentContainer>
-
-        </MainWrapper>
-    )
-}
+          <MyButton label="Checkout" onClick={submit} />
+        </div>
+      </ContentContainer>
+    </MainWrapper>
+  );
+};
 
 export const getStaticProps = async ({ locale }) => ({
-    props: {
-        ...(await serverSideTranslations(locale ?? "es", ["common"])),
-    },
+  props: {
+    ...(await serverSideTranslations(locale ?? "es", ["common"])),
+  },
 });
 
-
-export default Checkout
+export default Checkout;
