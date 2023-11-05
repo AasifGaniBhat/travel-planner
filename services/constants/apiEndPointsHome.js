@@ -9,3 +9,4 @@ export const HOTELS = "api/v1/hotels/10";
 export const GUIDES = "api/v1/guides/10";
 export const BOOKING = "api/v1/booking";
 export const MY_BOOKINGS = "api/v1/user-bookings";
+export const DESTINATIONS = "api/v1/destinations/10";

@@ -77,7 +77,6 @@ const Header = () => {
     }
   }, []);
 
-  console.log({ loginData });
   return (
     <div className={classes.main_wrapper}>
       <ContentContainer>
@@ -116,13 +115,13 @@ const Header = () => {
             >
               Travel Guide
             </div>
-            <div
+            {/* <div
               className={classes.Driver}
               onClick={Driver}
               style={{ cursor: "pointer" }}
             >
               Drivers
-            </div>
+            </div> */}
             {loginData ? (
               <div
                 className={classes.Profile}

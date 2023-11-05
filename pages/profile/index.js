@@ -8,7 +8,7 @@ import EventHeading from "../../components/headings";
 import Tabs from "../../components/ui/tabs/tabs";
 import DateService from "../../services/dateService";
 import { MyBookings } from "../../services/apis/apisHome";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginDataState } from "../../recoil/atoms/common";
 import CommonService from "../../services/commonService";
 const Profile = () => {
@@ -19,7 +19,7 @@ const Profile = () => {
   const getMyBookings = MyBookings();
 
   // recoil states
-  const [loginData, setLoginData] = useState(null);
+  const [loginData, setLoginData] = useRecoilState(loginDataState);
 
   const tabs = ["Upcoming Bookings", "Past Bookings"];
 
@@ -30,10 +30,10 @@ const Profile = () => {
   useEffect(() => {
     let logindata = CommonService.getLocalEncryp("loginData");
 
-    console.log({ logindata });
+    // console.log({ logindata });
 
     if (logindata) {
-      setLoginData(loginData);
+      setLoginData(logindata);
       getMyBookings({
         callback: (res) => {
           if (res?.data) {
@@ -88,6 +88,8 @@ const Profile = () => {
     );
   };
 
+  console.log({ loginData });
+
   return (
     <MainWrapper t={t}>
       <div className={classes.container}>
@@ -104,34 +106,36 @@ const Profile = () => {
         </Head>
         <ContentContainer>
           <EventHeading label="Profile" />
-          <div className={classes.profile_details}>
-            <div className={classes.profile}>
-              <img src="/images/iustimages/as.jpg" />
-            </div>
-            <div className={classes.profile_body}>
-              <div className={classes.details_item}>
-                <span className={classes.label}>NAME : </span>
-                {loginData?.name}
+          {loginData && (
+            <div className={classes.profile_details}>
+              <div className={classes.profile}>
+                <img src="/images/iustimages/as.jpg" />
               </div>
-              {/* <div className={classes.details_item}>
+              <div className={classes.profile_body}>
+                <div className={classes.details_item}>
+                  <span className={classes.label}>NAME : </span>
+                  {loginData?.name}
+                </div>
+                {/* <div className={classes.details_item}>
                 <span className={classes.label}>ADDRESS : </span> Tiken batpora{" "}
               </div> */}
-              {/* <div className={classes.details_item}>
+                {/* <div className={classes.details_item}>
                 <span className={classes.label}>CITY : </span> Pulwama{" "}
               </div> */}
-              <div className={classes.details_item}>
-                <span className={classes.label}>CONTACT NO : </span>
-                {loginData?.phone}
-              </div>
-              <div className={classes.details_item}>
-                <span className={classes.label}>EMAIL : </span>
-                {loginData?.email}
-              </div>
-              {/* <div className={classes.details_item}>
+                <div className={classes.details_item}>
+                  <span className={classes.label}>CONTACT NO : </span>
+                  {loginData?.phone}
+                </div>
+                <div className={classes.details_item}>
+                  <span className={classes.label}>EMAIL : </span>
+                  {loginData?.email}
+                </div>
+                {/* <div className={classes.details_item}>
                 <span className={classes.label}>DESTINATION:</span>Gulmarg
               </div> */}
+              </div>
             </div>
-          </div>
+          )}
           <div className={classes.tabs_container}>
             <Tabs data={tabs} setTab={setSelectedTab} />
             {selectedTab === 0 ? (

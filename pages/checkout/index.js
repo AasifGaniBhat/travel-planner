@@ -3,7 +3,7 @@ import ContentContainer from "../../components/ui/content-container/content-cont
 import MainWrapper from "../../components/ui/wrapper/wrapper";
 import { useTranslation } from "react-i18next";
 import MyInput from "../../components/ui/my-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyButton from "../../components/ui/my-button";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -12,9 +12,16 @@ import {
 } from "../../recoil/atoms/common";
 import CommonService from "../../services/commonService";
 import { useRouter } from "next/router";
-import { PurchaseBooking } from "../../services/apis/apisHome";
+import {
+  GetCabTypes,
+  GetDestinations,
+  GetGuides,
+  GetHotels,
+  PurchaseBooking,
+} from "../../services/apis/apisHome";
 import { currentEventState } from "../../recoil/atoms/home";
 import DateService from "../../services/dateService";
+import MyDropdown from "../../components/ui/my-dropdown";
 
 const Checkout = () => {
   const { t } = useTranslation("common");
@@ -28,12 +35,84 @@ const Checkout = () => {
   const loginData = useRecoilValue(loginDataState);
 
   // APIS
-
   const purchaseBookingFunc = PurchaseBooking();
+  const getCabTypesFunc = GetCabTypes();
+  const getDestinationsFunc = GetDestinations();
+  const getHotelsFunc = GetHotels();
+  const getGuidesFunc = GetGuides();
 
+  //local states
   const [inputs, setInputs] = useState({});
+  const [cabs, setCabs] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [guides, setGuides] = useState([]);
+
+  useEffect(() => {
+    getCabs();
+    getDestinations();
+    getHotels();
+    getGuides();
+  }, []);
+
+  const getCabs = () => {
+    getCabTypesFunc({
+      callback: (res) => {
+        console.log("dfgjhkhdfgjhd", res);
+        if (res?.data?.data) {
+          let localData = res.data.data.map((it) => {
+            return { value: it.id, label: it.name };
+          });
+          setCabs(localData);
+        }
+      },
+    });
+  };
+
+  const getDestinations = () => {
+    getDestinationsFunc({
+      callback: (res) => {
+        console.log("destinations", res);
+        if (res?.data?.data) {
+          let localData = res.data.data.map((it) => {
+            return { value: it.id, label: it.name };
+          });
+          setDestinations(localData);
+        }
+      },
+    });
+  };
+
+  const getHotels = () => {
+    getHotelsFunc({
+      callback: (res) => {
+        console.log("hotels", res);
+        if (res?.data?.data) {
+          let localData = res.data.data.map((it) => {
+            return { value: it.id, label: it.name };
+          });
+          setHotels(localData);
+        }
+      },
+    });
+  };
+
+  const getGuides = () => {
+    getGuidesFunc({
+      callback: (res) => {
+        console.log("guides", res);
+        if (res?.data?.data) {
+          let localData = res.data.data.map((it) => {
+            return { value: it.id, label: it.name };
+          });
+          setGuides(localData);
+        }
+      },
+    });
+  };
 
   const onChange = (val, type) => {
+    console.log({ val, type });
     let error = `${type}Error`;
 
     setInputs({ ...inputs, [type]: val, [error]: null });
@@ -109,7 +188,19 @@ const Checkout = () => {
         aadhar: inputs.aadhar,
         passengers: inputs.passengers,
       },
+      addons: {
+        cab: inputs.cab ? inputs.cab : cabs[0].value,
+        destination: inputs.destination
+          ? inputs.destination
+          : destinations[0].value,
+        hotel: inputs.hotel ? inputs.hotel : hotels[0].value,
+        guide: inputs.guide ? inputs.guide : guides[0].value,
+      },
     };
+
+    console.log({ data });
+
+    return;
 
     purchaseBookingFunc({
       callback: (res) => {
@@ -203,6 +294,30 @@ const Checkout = () => {
             value={inputs.passengers}
             // error={inputs.passengersError ? true : false}
             error={inputs.passengersError ? inputs.passengersError : null}
+          />
+
+          <MyDropdown
+            options={cabs}
+            label="Select Cab"
+            onChange={(val) => onChange(val, "cab")}
+          />
+
+          <MyDropdown
+            options={destinations}
+            label="Select Destinations"
+            onChange={(val) => onChange(val, "destination")}
+          />
+
+          <MyDropdown
+            options={hotels}
+            label="Select Hotel"
+            onChange={(val) => onChange(val, "hotel")}
+          />
+
+          <MyDropdown
+            options={guides}
+            label="Select Guide"
+            onChange={(val) => onChange(val, "guide")}
           />
 
           <MyButton label="Checkout" onClick={submit} />

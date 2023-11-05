@@ -12,6 +12,7 @@ import {
   MY_BOOKINGS,
   PRODUCTS_FROM_CATEGORY,
   WISHLIST,
+  DESTINATIONS,
 } from "../constants/apiEndPointsHome";
 
 import { GetApi, PostApi } from "./crudApis";
@@ -24,6 +25,7 @@ export const Brands = () => GetApi(BRANDS);
 export const Banners = () => GetApi(BANNERS);
 export const GetEvents = () => GetApi(EVENTS);
 export const GetCabTypes = () => GetApi(CABTYPES);
+export const GetDestinations = () => GetApi(DESTINATIONS);
 export const GetHotels = () => GetApi(HOTELS);
 export const GetGuides = () => GetApi(GUIDES);
 export const PurchaseBooking = () => PostApi(BOOKING);
