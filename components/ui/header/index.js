@@ -13,7 +13,7 @@ const Header = () => {
   const cartItems = useRecoilState(cartListState);
   const totalCartValue = useRecoilValue(totalCartValueState);
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("jhgfds");
   const [searchOption, setSearchOption] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const options = [

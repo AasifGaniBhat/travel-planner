@@ -10,7 +10,7 @@ const MyInput = (props) => {
       className={classes.input_wrapper}
       style={props?.noSpace ? { marginBottom: 0 } : {}}
     >
-      {props.label ? <div className={classes.label}>{props.label} </div> : ""}
+      {props.label ? <div className={classes.label}>{props.label} </div> : null}
 
       <div className={classes.inner_input_wrapper} style={props.wrapperStyle}>
         {props.leftIcon ? (
@@ -29,6 +29,7 @@ const MyInput = (props) => {
           onDoubleClick={props.onDoubleClick}
           onKeyDown={props.onKeyDown}
           style={props.style}
+          disabled={props.disbale ? true : false}
         />
 
         {props.rightIcon ? (
